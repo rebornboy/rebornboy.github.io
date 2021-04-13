@@ -403,7 +403,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    3.1k
                 </div>
                 
 
@@ -447,137 +447,168 @@
 <p>然后输入：root，回车以后再输入密码就登陆到云服务器了。</p>
 <h3 id="配置云服务器"><a href="#配置云服务器" class="headerlink" title="配置云服务器"></a>配置云服务器</h3><p>我们需要nginx作为我们的网站服务器，所以我们首先要安装nginx，我们可以使用yum命令直接进行安装。</p>
 <h4 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h4><p>安装的执行命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-python"><code class="language-python">yum install <span class="token operator">-</span>y nginx
+</code></pre>
 <p>然后启动服务器：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx</span><br><span class="line">systemctl enable nginx</span><br></pre></td></tr></table></figure>
-
+<pre><code>systemctl start nginx
+systemctl enable nginx
+</code></pre>
 <p>在这里我们要记住/etc/nginx/是nginx默认的配置路径，一会要用到。</p>
 <p>在我们启动之前是云服务器的公网地址是无法访问的，启动之后就会出现如下页面：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/6.png" alt="6"></p>
 <p>但是我们实际上是想要让这个公网地址指向我们的博客，而不是nginx的默认网址，这就需要我们去配置nginx的配置文件。阿里云默认的库下载的是fedora版本的nginx，所以我们应该配置的是位于 etc/nginx/ 下的 nginx.conf 。</p>
 <p>我们可以打开该文件并修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
-
+<pre><code>vi /etc/nginx/nginx.conf
+</code></pre>
 <p>修改前：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/7.png" alt="7"></p>
 <p>修改后：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/8.png" alt="8"></p>
 <p>按esc退出编辑，:wq保存退出。</p>
 <p>因为我们在配置中指明了将/home/www/website作为博客目录存放地址，因此此时我们需要去创建它。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;home</span><br><span class="line">mkdir www</span><br><span class="line">cd www</span><br><span class="line">mkdir website</span><br></pre></td></tr></table></figure>
-
-<h4 id="云服务器中安装Git以及Node-js"><a href="#云服务器中安装Git以及Node-js" class="headerlink" title="云服务器中安装Git以及Node.js"></a>云服务器中安装Git以及Node.js</h4><h5 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https:&#x2F;&#x2F;rpm.nodesource.com&#x2F;setup_10.x | bash -</span><br><span class="line">sudo yum install -y nodejs</span><br></pre></td></tr></table></figure>
-
+<pre><code>cd /home
+mkdir www
+cd www
+mkdir website
+</code></pre>
+<h4 id="云服务器中安装Git以及Node-js"><a href="#云服务器中安装Git以及Node-js" class="headerlink" title="云服务器中安装Git以及Node.js"></a>云服务器中安装Git以及Node.js</h4><h5 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h5><pre><code>curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+sudo yum install -y nodejs
+</code></pre>
 <p>有如下显示则表示安装成功：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/9.png" alt="9"></p>
 <h5 id="安装Git及配置仓库"><a href="#安装Git及配置仓库" class="headerlink" title="安装Git及配置仓库"></a>安装Git及配置仓库</h5><p>这一部分的主要目的是让我们个人的电脑可以通过ssh方式连接到云服务器，然后我们就可以通过命令行方式将我们的博客Po到服务器上。操作如下：</p>
-<h5 id="安装git"><a href="#安装git" class="headerlink" title="安装git:"></a>安装git:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置git用户："><a href="#配置git用户：" class="headerlink" title="配置git用户："></a>配置git用户：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser git</span><br></pre></td></tr></table></figure>
-
+<h5 id="安装git"><a href="#安装git" class="headerlink" title="安装git:"></a>安装git:</h5><pre><code>yum install git
+</code></pre>
+<h5 id="配置git用户："><a href="#配置git用户：" class="headerlink" title="配置git用户："></a>配置git用户：</h5><pre><code>adduser git
+</code></pre>
 <p>修改用户权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 740 &#x2F;etc&#x2F;sudoers</span><br><span class="line">vi &#x2F;etc&#x2F;sudoers</span><br></pre></td></tr></table></figure>
-
+<pre><code>chmod 740 /etc/sudoers
+vi /etc/sudoers
+</code></pre>
 <p>注意文件夹中权限设置的意义：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/10.png" alt="10"></p>
 <p>然后在这个地方添加这句话：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/11.png" alt="11"></p>
 <p>这样，服务器的用户就有了root和git两个（这里很重要，你在不同的用户下面进行同样的操作，最后会产生不同的结果，我的第一次失败很大原因就是因为这个。）</p>
 <p>保存退出后 将sudoers文件权限改回原样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 &#x2F;etc&#x2F;sudoers</span><br></pre></td></tr></table></figure>
-
+<pre><code>chmod 400 /etc/sudoers
+</code></pre>
 <p>设置git用户的密码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd git</span><br></pre></td></tr></table></figure>
-
+<pre><code>sudo passwd git
+</code></pre>
 <p>注意：后面的ssh公钥，既标识用户，也标识机器，所以在使用的时候要注意切换。</p>
 <h4 id="云服务器中的公钥配置"><a href="#云服务器中的公钥配置" class="headerlink" title="云服务器中的公钥配置"></a>云服务器中的公钥配置</h4><p>首先切换到git用户，然后在~目录下创建.ssh文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su git</span><br><span class="line">cd ~</span><br><span class="line">mkdir .ssh</span><br><span class="line">cd .ssh</span><br></pre></td></tr></table></figure>
-
+<pre><code>su git
+cd ~
+mkdir .ssh
+cd .ssh
+</code></pre>
 <p>生成公钥密钥文件(接下来这几步都在主机里面做，使用gitbash)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;.ssh</span><br><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
-
+<pre><code>cd ~/.ssh
+ssh-keygen
+</code></pre>
 <p>此时在目录下就会有两个文件，分别是</p>
 <p>id_rsa 和 id_rsa.pub</p>
 <p>其中 id_rsa.pub 就是公钥文件 我们打开文件并复制一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
-
+<pre><code>vim id_rsa.pub
+</code></pre>
 <p>接下来，接着回到服务器中进行操作：</p>
 <p>在服务器中生成认证文件authorized_keys：（在git用户下的.ssh文件夹中哦）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch authorized_keys</span><br><span class="line">vim authorized_keys</span><br></pre></td></tr></table></figure>
-
+<pre><code>touch authorized_keys
+vim authorized_keys
+</code></pre>
 <p>然后将我们刚才从id_rsa.pub中复制的密钥粘贴进去</p>
 <p>最后我们修改它的权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~&#x2F;.ssh&#x2F;authorized_keys</span><br><span class="line">chmod 700 ~&#x2F;.ssh</span><br></pre></td></tr></table></figure>
-
+<pre><code>chmod 600 ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+</code></pre>
 <p>这个时候，我们就可以在主机，打开cmd或gitbash，使用ssh方式连接我们的云服务器了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@服务器公网IP</span><br></pre></td></tr></table></figure>
-
+<pre><code>ssh git@服务器公网IP
+</code></pre>
 <h4 id="在云服务器中创建git仓库"><a href="#在云服务器中创建git仓库" class="headerlink" title="在云服务器中创建git仓库"></a>在云服务器中创建git仓库</h4><p>现在我们要开始创建一个git的仓库，并且新建一个post-receive文件，目的是为了接收来自主机的git操作，操作如下:（注意，这些操作都处于git用户之下的）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">git init --bare blog.git</span><br><span class="line">vi ~&#x2F;blog.git&#x2F;hooks&#x2F;post-receive</span><br></pre></td></tr></table></figure>
-
+<pre><code>cd ~
+git init --bare blog.git
+vi ~/blog.git/hooks/post-receive
+</code></pre>
 <p>然后在post-receive文件中输入以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --work-tree&#x3D;&#x2F;home&#x2F;www&#x2F;website --git-dir&#x3D;&#x2F;home&#x2F;git&#x2F;blog.git checkout -f</span><br></pre></td></tr></table></figure>
-
+<pre><code>git --work-tree=/home/www/website --git-dir=/home/git/blog.git checkout -f
+</code></pre>
 <p>这样就把git仓库中的文件指向/home/www/website了。</p>
 <p>保存退出并授予该文件可执行权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ~&#x2F;blog.git&#x2F;hooks&#x2F;post-receive</span><br></pre></td></tr></table></figure>
-
+<pre><code>chmod +x ~/blog.git/hooks/post-receive
+</code></pre>
 <p>至此我们就完成了所有关于服务器端的所有配置。</p>
 <h2 id="在Windows主机上的配置"><a href="#在Windows主机上的配置" class="headerlink" title="在Windows主机上的配置"></a>在Windows主机上的配置</h2><h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><p>在主机上的操作比较简单，首先先在主机上安装好git，然后确保安装好了node.js。</p>
 <p>如果显示以下内容则代表已经安装好：</p>
 <p><img src="/image/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E4%B9%8B%E6%97%85/12.png" alt="12"></p>
 <h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a></h3><p>在安装之前，将npm换成淘宝的服务器，避免因为连到国外的服务器而导致卡顿</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
+<pre><code>npm config set registry https://registry.npm.taobao.org
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+</code></pre>
 <p>接下来就直接安装 hexo：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
+<pre><code>cnpm install -g hexo-cli
+</code></pre>
 <h3 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h3><p>然后我们选择一个目录用来初始化博客程序，例如F:/Blog</p>
 <p>在cmd中输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">F:</span><br><span class="line">cd blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-
+<pre><code>F:
+cd blog
+hexo init
+</code></pre>
 <p>执行成功后再安装两个插件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">npm install hexo-server</span><br></pre></td></tr></table></figure>
-
+<pre><code>npm install hexo-deployer-git --save
+npm install hexo-server
+</code></pre>
 <p>然后执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
+<pre><code>hexo g
+hexo s
+</code></pre>
 <p>之后我们就可以在自己的本机上，打开浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>查看自己的博客了；</p>
 <p>修改blog文件夹中的配置文件<a target="_blank" rel="noopener" href="https://blog.csdn.net/zemprogram/article/details/104288872">_config.yml</a>完成博客的部署，这个步骤的目的是将我们的博客指向我们的服务器中。</p>
 <p>在刚才生成Hexo的目录下，找到_config.yml，打开它。</p>
 <p>找到deploy 做如下配置（注意冒号后面有空格,type,repo,branch,message前面也加两个空格）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@这里改为服务器公网IP:&#x2F;home&#x2F;git&#x2F;blog.git       </span><br><span class="line">  branch: master                           </span><br><span class="line">  message:</span><br></pre></td></tr></table></figure>
-
+<pre><code>deploy:
+  type: git
+  repo: git@这里改为服务器公网IP:/home/git/blog.git       
+  branch: master                           
+  message:
+</code></pre>
 <p>保存退出，然后尝试写一篇文章并且发布到服务器上：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;Hello My First Blog&quot;</span><br><span class="line">hexo clean </span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
+<pre><code>hexo new &quot;Hello My First Blog&quot;
+hexo clean 
+hexo g
+hexo d
+</code></pre>
 <p>在服务器上重新运行nginx服务器：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-
+<pre><code>nginx -s reload
+</code></pre>
 <p>这样，就将博客部署到服务器上了，可通过公网IP进行访问了。</p>
 <h2 id="出现的错误："><a href="#出现的错误：" class="headerlink" title="出现的错误："></a>出现的错误：</h2><p>通过以上的步骤应该可以通过公网IP访问到自己的博客了，但我在部署后出现了如下错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: fatal: cannot create directory at &#39;2021&#39;: Permission denied</span><br></pre></td></tr></table></figure>
-
+<pre><code>remote: fatal: cannot create directory at &#39;2021&#39;: Permission denied
+</code></pre>
 <p>并且部署目录/home/www/website/里面并没有推送的文件，出现这个问题的原因应该是部署目录/home/www/website/ 没有写权限导致的。</p>
 <p>解决方法：添加写权限只能就可以了。(注意：在root权限下方可执行)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;home&#x2F;www</span><br><span class="line">chmod go+w website</span><br></pre></td></tr></table></figure>
-
+<pre><code>cd /home/www
+chmod go+w website
+</code></pre>
 <h2 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h2><p>在将前面的步骤完成之后，现在该做的就是选择一个漂亮的主题了，主题可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">Hexo主题网站</a>中进行选择。在你选择好主题后会进入到该主题对应的GitHub项目中，访问项目中的Wiki即可获得安装步骤。</p>
 <p>说来惭愧，在最开始的时候我选择了<a target="_blank" rel="noopener" href="https://github.com/tomotoes/hexo-theme-tomotoes">hexo-theme-tomotoes</a>，但在安装主题的过程中一直出错，最后只能选择放弃。我选择的第二个主题是<a target="_blank" rel="noopener" href="https://github.com/blinkfox/hexo-theme-matery">hexo-theme-matery</a>，这个主题在作者的<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/28/qian-duan/hexo-bo-ke-zhu-ti-zhi-hexo-theme-matery-de-jie-shao/">博客</a>中有详细的介绍，因此不再加以赘述。</p>
 <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>在前面的步骤完成之后，现在我能利用云服务器的公网IP对博客进行访问了，但我想要的是利用域名进行访问。如果需要用域名解析到国内的服务器并进行访问需要对域名和服务器进行备案，这里又出现一个难题，服务器备案需要购买超过三个月，而我领到的免费云服务器只有两个月。不仅如此，如果一直使用云服务器，后续的开销也会越来越大，这对于仅仅是学生的我负担很大。因此开始考虑优化博客的部署方案。</p>
 <p>优化考虑的方案是将博客部署到Github上，在最开始之所以没有考虑GitHub的原因是Github访问太慢，而且有时候会出现连接断开的问题。在经过搜索之后，我发现了可以利用Vercel解决这个问题。</p>
 <h4 id="Github部署博客"><a href="#Github部署博客" class="headerlink" title="Github部署博客"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/princek123/article/details/84067942?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.baidujs&dist_request_id=1328767.43301.16175234863539657&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.baidujs">Github部署博客</a></h4><p>这里需要注意的是blog中_config.yml的修改，注意修改两个地方，一个是deploy，还有一个是url和root：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:xxx&#x2F;xxx.github.io.git       </span><br><span class="line">  branch: master                           </span><br><span class="line">  message:</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url: https://xxx.github.io/</span><br><span class="line">root: /</span><br></pre></td></tr></table></figure>
-
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:xxx/xxx.github.io.git       
+  branch: master                           
+  message:
+</code></pre>
+<pre class=" language-python"><code class="language-python">url<span class="token punctuation">:</span> https<span class="token punctuation">:</span><span class="token operator">//</span>xxx<span class="token punctuation">.</span>github<span class="token punctuation">.</span>io<span class="token operator">/</span>
+root<span class="token punctuation">:</span> <span class="token operator">/</span>
+</code></pre>
 <p>特别注意：GitHub上并不是实时更新的，它会有一段时间的延迟，因此如果修改了以后一下子没有刷新出来不妨等一会儿。</p>
 <h3 id="Vercel上部署Github的项目"><a href="#Vercel上部署Github的项目" class="headerlink" title="Vercel上部署Github的项目"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/wzc_coder/article/details/112300956">Vercel上部署Github的项目</a></h3><p>这里注意的是域名的解析，不妨在控制台中将xxx.com和”www+xxx.com”都进行解析，这样，这两个网址都会指向Vercel中的项目。</p>
 <h2 id="博客编辑器"><a href="#博客编辑器" class="headerlink" title="博客编辑器"></a>博客编辑器</h2><p>在这里我推荐两个博客编辑器，一个是<a target="_blank" rel="noopener" href="https://github.com/zhuzhuyule/HexoEditor">HexoEditor</a>,一个是<a target="_blank" rel="noopener" href="https://typora.io/">typora</a>。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>以上只是将一个博客的台子给搭好了，后面还有更多的内容需要自己去慢慢摸索。</p>
+<p>在搭建好之后，我写了这篇博文，刚发布的时候代码显示一直不对劲，但当时也没有去管它，后面又去忙其他的事情去了。直到现在（四月十三号），才抽出时间把这个弄好了，其实就是个小问题，是_config.yml文件中的highlight.enable忘记设置成false了。所以，遇到问题不要拖，因为问题一旦将就，后面日积月累就会形成大问题，所以一开始就要有沉下心来，解决问题的勇气和决心。</p>
 <p>（以上内容是作者本人的一些经历感悟，如果有问题欢迎讨论交流！）</p>
 
                 
@@ -605,7 +636,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://rebornboy.github.io/2021/04/04/wo-de-bo-ke-chuang-jian-zhi-lu/">https://rebornboy.github.io/2021/04/04/wo-de-bo-ke-chuang-jian-zhi-lu/</a>
+                    <a href="https://rebornboy.github.io/2021/04/04/bo-ke-chuang-jian/wo-de-bo-ke-chuang-jian-zhi-lu/">https://rebornboy.github.io/2021/04/04/bo-ke-chuang-jian/wo-de-bo-ke-chuang-jian-zhi-lu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -818,7 +849,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/05/ren-sheng-shi-chang-ma-la-song-bu-shi-bai-mi-pao/">
+                <a href="/2021/04/05/sheng-huo-gan-wu/ren-sheng-shi-chang-ma-la-song-bu-shi-bai-mi-pao/">
                     <div class="card-image">
                         
                         <img src="/source/images/smile.jpg" class="responsive-img" alt="人生是场马拉松，不是百米跑">
@@ -866,7 +897,7 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/04/wo-de-bo-ke-chuang-jian-zhi-lu/">
+                <a href="/2021/04/04/bo-ke-chuang-jian/wo-de-bo-ke-chuang-jian-zhi-lu/">
                     <div class="card-image">
                         
                         <img src="/images/home.jpg" class="responsive-img" alt="我的博客创建之旅">
