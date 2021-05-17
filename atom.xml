@@ -6,7 +6,7 @@
   <link href="https://rebornboy.github.io/atom.xml" rel="self"/>
   
   <link href="https://rebornboy.github.io/"/>
-  <updated>2021-05-06T11:22:55.024Z</updated>
+  <updated>2021-05-17T12:00:45.553Z</updated>
   <id>https://rebornboy.github.io/</id>
   
   <author>
@@ -15,6 +15,108 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>《洞穴奇案》读后感</title>
+    <link href="https://rebornboy.github.io/2021/05/16/du-hou-gan/dong-xue-qi-an-guan-hou-gan/"/>
+    <id>https://rebornboy.github.io/2021/05/16/du-hou-gan/dong-xue-qi-an-guan-hou-gan/</id>
+    <published>2021-05-16T13:20:00.000Z</published>
+    <updated>2021-05-17T12:00:45.553Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;从2021.4.29/16: 18到2021.5.16/21:</summary>
+        
+      
+    
+    
+    
+    <category term="读后感" scheme="https://rebornboy.github.io/categories/%E8%AF%BB%E5%90%8E%E6%84%9F/"/>
+    
+    
+    <category term="思辨" scheme="https://rebornboy.github.io/tags/%E6%80%9D%E8%BE%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安装tss过程中遇到的错误</title>
+    <link href="https://rebornboy.github.io/2021/05/08/xue-xi/an-zhuang-tss-guo-cheng-zhong-yu-dao-de-cuo-wu/"/>
+    <id>https://rebornboy.github.io/2021/05/08/xue-xi/an-zhuang-tss-guo-cheng-zhong-yu-dao-de-cuo-wu/</id>
+    <published>2021-05-08T09:00:00.000Z</published>
+    <updated>2021-05-08T08:29:26.128Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在安装TSS的过程中，出现了一个错误，如封面所示：&lt;/p&gt;
+&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;collect2: error: ld returned 1 &lt;span class=&quot;token</summary>
+        
+      
+    
+    
+    
+    <category term="学习" scheme="https://rebornboy.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="tss" scheme="https://rebornboy.github.io/tags/tss/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记录一下安装openssl的艰难旅程</title>
+    <link href="https://rebornboy.github.io/2021/05/08/xue-xi/ji-lu-yi-xia-an-zhuang-openssl-de-jian-nan-lu-cheng/"/>
+    <id>https://rebornboy.github.io/2021/05/08/xue-xi/ji-lu-yi-xia-an-zhuang-openssl-de-jian-nan-lu-cheng/</id>
+    <published>2021-05-08T03:00:00.000Z</published>
+    <updated>2021-05-08T06:17:51.790Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这个问题，起起伏伏纠缠了我将近大半年，终于解决了，在此记录一下！&lt;/p&gt;
+&lt;p&gt;在几个月前，当我踌躇满志的从学姐手里接过这个&lt;a href=&quot;https://github.com/FutureTPM/sw-tpm&quot;&gt;仿真&lt;/a&gt;以后，怎么也没想到这个仿真的&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="学习" scheme="https://rebornboy.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="安装" scheme="https://rebornboy.github.io/tags/%E5%AE%89%E8%A3%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>请回答1988观后感</title>
+    <link href="https://rebornboy.github.io/2021/05/06/guan-hou-gan/qing-hui-da-1988-guan-hou-gan/"/>
+    <id>https://rebornboy.github.io/2021/05/06/guan-hou-gan/qing-hui-da-1988-guan-hou-gan/</id>
+    <published>2021-05-06T12:00:00.000Z</published>
+    <updated>2021-05-17T11:40:55.639Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;其实，在刚开始看这部电视剧的时候，心里就一直有个想法，等看完之后一定要写一篇观后感记录一下，实在是因为这部电视剧有太多太多让我深受感触的地方了。这部电视剧并不是我第一次看，在去年的时候，我曾经看过十几分钟，但当时并没有很大耐心，刚开始没有让自己提起兴趣就再也没看了。直到这次</summary>
+        
+      
+    
+    
+    
+    <category term="观后感" scheme="https://rebornboy.github.io/categories/%E8%A7%82%E5%90%8E%E6%84%9F/"/>
+    
+    
+    <category term="请回答1988" scheme="https://rebornboy.github.io/tags/%E8%AF%B7%E5%9B%9E%E7%AD%941988/"/>
+    
+  </entry>
   
   <entry>
     <title>定个小目标</title>
@@ -151,7 +253,7 @@
     <link href="https://rebornboy.github.io/2021/04/04/bo-ke-chuang-jian/wo-de-bo-ke-chuang-jian-zhi-lu/"/>
     <id>https://rebornboy.github.io/2021/04/04/bo-ke-chuang-jian/wo-de-bo-ke-chuang-jian-zhi-lu/</id>
     <published>2021-04-04T08:00:00.000Z</published>
-    <updated>2021-05-06T10:54:05.289Z</updated>
+    <updated>2021-05-17T11:56:05.592Z</updated>
     
     
       
